@@ -1,27 +1,20 @@
 import React from 'react';
-import { getCategories } from '../api';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+
+import Home from './Home';
+import Category from './Category';
+import Post from './Post';
 
 class App extends React.Component {
-  state = { categories: [] };
-
-  componentDidMount() {
-    getCategories().then(categories => {
-      console.log(categories);
-      this.setState({ categories });
-    });
-  }
-
   render() {
-    let { categories } = this.state;
-
     return (
-      <div className="App">
-        { categories.map(category =>
-          <div key={category.name}>
-            <a href={'/'+category.path}>{category.name}</a>
-          </div>
-        ) }
-      </div>
+      <Router>
+        <div>
+          <Route path="/" component={Home} exact />
+          <Route path="/:category" component={Category} exact />
+          <Route path="/:category/:post" component={Post} exact />
+        </div>
+      </Router>
     );
   }
 }
