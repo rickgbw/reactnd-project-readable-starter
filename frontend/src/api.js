@@ -25,10 +25,86 @@ export const getPosts = category => {
     }
 }
 
+export const addPost = (title, body, author, category) =>
+    fetch(`${api}/posts`, { 
+        method: 'POST', 
+        headers,
+        body: JSON.stringify({
+            id: 0,
+            timestamp: Date.now(),
+            title,
+            body,
+            author,
+            category
+        })
+    })
+    .then(res => res.json());
+
 export const getPost = id =>
     fetch(`${api}/posts/${id}`, { headers })
         .then(res => res.json());
 
+export const votePost = (id, option) =>
+    fetch(`${api}/posts/${id}`, { 
+        method: 'POST', 
+        headers,
+        body: JSON.stringify({ option })
+    })
+    .then(res => res.json());
+
+export const editPost = (id, title, body) =>
+    fetch(`${api}/posts/${id}`, { 
+        method: 'PUT', 
+        headers,
+        body: JSON.stringify({ title, body })
+    })
+    .then(res => res.json());
+
+export const delPost = id =>
+    fetch(`${api}/posts/${id}`, { method: 'DELETE', headers })
+        .then(res => res.json());
+
 export const getComments = id =>
     fetch(`${api}/posts/${id}/comments`, { headers })
+        .then(res => res.json());
+
+export const addComment = (body, author, parentId) =>
+    fetch(`${api}/comments`, { 
+        method: 'POST', 
+        headers,
+        body: JSON.stringify({
+            id: 0,
+            timestamp: Date.now(),
+            body,
+            author,
+            parentId
+        })
+    })
+    .then(res => res.json());
+
+export const getComment = id =>
+    fetch(`${api}/comments/${id}`, { headers })
+        .then(res => res.json());
+
+export const voteComment = (id,option) =>
+    fetch(`${api}/comments/${id}`, { 
+        method: 'POST', 
+        headers,
+        body: JSON.stringify({ option })
+    })
+    .then(res => res.json());
+
+export const editComment = (id,body) =>
+    fetch(`${api}/comments/${id}`, { 
+        method: 'PUT', 
+        headers,
+        body: JSON.stringify({
+            timestamp: Date.now(),
+            body
+        })
+    })
+    .then(res => res.json());
+
+export const delComment = id =>
+    fetch(`${api}/comments/${id}`, { method: 'DELETE', headers })
         .then(res => res.json());
